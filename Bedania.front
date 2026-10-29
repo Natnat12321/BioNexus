@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resonai - Build Your Future</title>
+    <style>
+        :root {
+            --bg-deep: #030712;
+            --bg-surface: #0b1329;
+            --accent-glow: rgba(59, 130, 246, 0.15);
+            --border-glass: rgba(255, 255, 255, 0.08);
+            --text-light: #ffffff;
+            --text-muted: #94a3b8;
+        }
+
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-light);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+
+        /* Ambient background glow effects */
+        .ambient-glow {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.12) 0%, rgba(3, 7, 18, 0) 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+
+        .grid-pattern {
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: 0;
+            mask-image: radial-gradient(circle at center, black 40%, transparent 80%);
+        }
+
+
+        .hero-section {
+            text-align: center;
+            max-width: 850px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+
+        /* Typography & Slower Intro Animations */
+        .hero-title {
+            font-size: clamp(2.75rem, 6vw, 4.5rem);
+            font-weight: 800;
+            color: var(--text-light);
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.03em;
+            
+            opacity: 0;
+            transform: translateY(35px);
+            animation: fadeSlideUp 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+        }
+
+
+        .hero-title .gradient-text {
+            background: linear-gradient(135deg, #ffffff 30%, #60a5fa 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+
+        .hero-subtitle {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            color: var(--text-muted);
+            line-height: 1.6;
+            max-width: 640px;
+            margin: 0 auto 2.75rem auto;
+            
+            opacity: 0;
+            transform: translateY(35px);
+            animation: fadeSlideUp 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
+        }
+
+
+        /* CTA & Buttons */
+        .cta-container {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            
+            opacity: 0;
+            transform: translateY(35px);
+            animation: fadeSlideUp 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.9s forwards;
+        }
+
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.65rem;
+            padding: 0.9rem 2.2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            text-decoration: none;
+        }
+
+
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: white;
+            border: none;
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.35);
+        }
+
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(59, 130, 246, 0.5);
+        }
+
+
+        .btn-secondary {
+            background-color: rgba(255, 255, 255, 0.03);
+            color: var(--text-light);
+            border: 1px solid var(--border-glass);
+            backdrop-filter: blur(4px);
+        }
+
+
+        .btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.07);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+
+        /* Floating features badge strip */
+        .features-strip {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            margin-top: 4.5rem;
+            flex-wrap: wrap;
+            
+            opacity: 0;
+            transform: translateY(35px);
+            animation: fadeSlideUp 1.4s cubic-bezier(0.16, 1, 0.3, 1) 1.2s forwards;
+        }
+
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+
+        .feature-item svg {
+            width: 18px;
+            height: 18px;
+            color: #3b82f6;
+        }
+
+
+        /* Keyframes */
+        @keyframes fadeSlideUp {
+            0% {
+                opacity: 0;
+                transform: translateY(35px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+
+
+    <!-- Ambient background visuals -->
+    <div class="ambient-glow"></div>
+    <div class="grid-pattern"></div>
+
+
+    <main class="hero-section">
+        <!-- Main Typography -->
+        <h1 class="hero-title">
+            Build your future.<br>
+            <span class="gradient-text">One resume at a time.</span>
+        </h1>
+        
+        <p class="hero-subtitle">
+            Create a professional resume in minutes. Enter your details, choose your style, and watch your resume come to life in real time.
+        </p>
+
+
+        <!-- CTA Action Buttons -->
+        <div class="cta-container">
+            <a href="#builder" class="btn btn-primary">
+                Get Started Free
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+            <a href="#templates" class="btn btn-secondary">Explore Styles</a>
+        </div>
+
+
+        <!-- Mini Value-Prop Checklist -->
+        <div class="features-strip">
+            <div class="feature-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                ATS Friendly
+            </div>
+            <div class="feature-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Live Preview
+            </div>
+            <div class="feature-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Instant PDF Export
+            </div>
+        </div>
+    </main>
+
+
+</body>
+</html>

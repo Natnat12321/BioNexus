@@ -1,0 +1,333 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BioNexus | Resume Studio</title>
+<style>
+@import url(https://github.com/Natnat12321/BioNexus.git);
+
+:root{--bg:#080b14;--panel:#101625;--border:#273149;--text:#f1f5ff;--muted:#929db4;--accent:#8b5cf6;--cyan:#22d3ee}
+*{box-sizing:border-box}
+body{margin:0;font-family:'DM Sans',sans-serif;background:radial-gradient(ellipse at 5% 0%,#182044,transparent 30%),radial-gradient(ellipse at 95% 15%,#171035,transparent 25%),var(--bg);color:var(--text);min-height:100vh}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:18px;padding:15px 5%;border-bottom:1px solid #ffffff18;background:#080b14;position:sticky;top:0;z-index:10}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:46px;height:46px;display:grid;place-items:center;border-radius:14px;background:linear-gradient(135deg,#a855f7,#386bff 55%,#22d3ee)}
+.logo svg{width:30px;height:30px}
+.brand-name{font-size:21px;font-weight:800;letter-spacing:-.8px}
+.brand-name span{color:var(--cyan)}
+.brand-sub{color:var(--muted);font-size:10px;margin-top:3px;letter-spacing:2px;font-weight:700}
+.top-actions{display:flex;gap:9px;flex-wrap:wrap}
+.btn{border:1px solid var(--border);background:#151d2e;color:var(--text);border-radius:10px;padding:10px 14px;font-size:12px;font-weight:700}
+.btn-primary{border:0;background:linear-gradient(110deg,#7c3aed,#5b5ce2);color:white}
+.btn-cyan{background:var(--cyan);color:#06131b;border:0}
+.btn-danger{color:#fda4af}
+.workspace{max-width:1550px;padding:28px 5% 60px;margin:auto;display:grid;grid-template-columns:minmax(320px,.88fr) minmax(400px,1.12fr);gap:24px;align-items:start}
+.panel{min-width:0;border:1px solid var(--border);border-radius:16px;overflow:hidden;background:#101625;box-shadow:0 20px 55px #0003}
+.panel-header{padding:19px 21px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:12px}
+.panel-header h2{margin:0;font-size:15px}
+.panel-header p{margin:5px 0 0;color:var(--muted);font-size:11px}
+.step{color:#c4b5fd;background:#8b5cf61a;border:1px solid #8b5cf630;padding:6px 9px;border-radius:7px;font-size:9px;font-weight:800}
+.editor-body{padding:21px}
+.section-title{display:flex;align-items:center;gap:10px;font-size:12px;font-weight:800;margin:25px 0 14px}
+.section-title:first-child{margin-top:0}
+.section-icon{width:29px;height:29px;border-radius:8px;display:grid;place-items:center;color:#c4b5fd;background:#8b5cf61c}
+.field-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.field{min-width:0}
+.field.full{grid-column:1/-1}
+label{display:block;margin-bottom:7px;color:#c2cbe0;font-size:10px;font-weight:800;letter-spacing:.45px}
+input,textarea,select{display:block;width:100%;border:1px solid #2b354d;border-radius:9px;background:#0b1120;color:var(--text);padding:11px 12px;outline:none;font-size:12px}
+input::placeholder,textarea::placeholder{color:#67748d}
+input:focus,textarea:focus,select:focus{border-color:var(--accent);box-shadow:0 0 0 3px #8b5cf61b}
+textarea{min-height:85px;resize:vertical;line-height:1.7}
+.help{color:#78859d;font-size:10px;margin-top:6px;line-height:1.6}
+.divider{border:0;border-top:1px solid var(--border);margin:23px 0}
+.theme-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.theme-option{background:#0b1120;border:1px solid #2b354d;border-radius:10px;padding:9px 7px;color:var(--text);text-align:left}
+.theme-option.active{border-color:var(--accent);box-shadow:0 0 0 2px #8b5cf626;background:#17162b}
+.theme-art{height:42px;border-radius:5px;margin-bottom:8px;overflow:hidden;display:flex;background:#f8fafc}
+.theme-art span{display:block}
+.theme-option strong{display:block;font-size:10px}
+.theme-option small{display:block;font-size:9px;color:var(--muted);margin-top:4px}
+.color-row{display:flex;align-items:center;gap:12px}
+.color-row input[type=color]{width:43px;height:37px;padding:3px;cursor:pointer}
+.color-row span{font-size:11px;color:var(--muted)}
+.photo-upload{display:flex;align-items:center;gap:13px;padding:12px;background:#0b1120;border:1px dashed #35415b;border-radius:10px}
+.avatar-placeholder{width:45px;height:45px;flex:0 0 45px;border-radius:12px;display:grid;place-items:center;background:#8b5cf61c;font-size:22px;overflow:hidden}
+.avatar-placeholder img{width:100%;height:100%;object-fit:cover}
+.photo-copy{flex:1;min-width:0}
+.photo-copy strong{display:block;font-size:11px;margin-bottom:4px}
+.photo-copy span{color:var(--muted);font-size:10px}
+.photo-upload input{max-width:125px;font-size:10px;padding:7px}
+.score-card{margin-top:20px;padding:16px;background:linear-gradient(135deg,#8b5cf615,#22d3ee08);border:1px solid #8b5cf638;border-radius:12px}
+.score-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.score-top strong{font-size:12px}
+.score-number{font-size:21px;font-weight:900;color:#c4b5fd}
+.score-track{height:6px;background:#273149;border-radius:20px;margin:12px 0;overflow:hidden}
+.score-fill{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--cyan));transition:width .3s}
+.score-message{color:var(--muted);font-size:11px;line-height:1.6}
+.coach-list{display:grid;gap:8px;margin-top:12px}
+.coach-item{display:flex;gap:8px;color:#b6c1d7;font-size:11px;line-height:1.5}
+.coach-item .check{color:#34d399}
+.preview-panel{position:sticky;top:85px}
+.live-dot{width:7px;height:7px;border-radius:50%;background:#34d399;display:inline-block;margin-right:5px}
+.preview-area{padding:22px;background:#0b101d;min-height:500px}
+.preview-caption{display:flex;justify-content:space-between;color:var(--muted);font-size:10px;margin-bottom:14px;letter-spacing:.8px;font-weight:700}
+
+/* RESUME */
+.paper{--resume-accent:#6558d3;width:100%;max-width:760px;min-height:720px;margin:auto;background:white;color:#263247;font-family:'DM Sans',Arial,sans-serif;font-size:10px;line-height:1.7;letter-spacing:.1px;box-shadow:0 12px 40px #0006;overflow-wrap:anywhere}
+.resume-header{padding:32px 35px 26px;color:white;background:var(--resume-accent);display:flex;gap:20px;align-items:center}
+.resume-photo{width:86px;height:86px;flex:0 0 86px;border-radius:50%;object-fit:cover;border:3px solid #ffffffa8;display:none}
+.resume-photo.visible{display:block}
+.resume-name{font-family:'Montserrat',sans-serif;margin:0;font-size:30px;line-height:1.2;font-weight:800;letter-spacing:-.5px}
+.resume-title{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;letter-spacing:.7px;margin-top:8px}
+.resume-contact{display:flex;flex-wrap:wrap;gap:6px 13px;margin-top:12px;font-size:9px;line-height:1.8}
+.resume-content{padding:27px 35px 35px}
+.resume-columns{display:grid;grid-template-columns:1.65fr 1fr;gap:25px}
+.resume-section{margin-bottom:23px;break-inside:avoid}
+.resume-section h3{font-family:'Montserrat',sans-serif;margin:0 0 11px;padding-bottom:7px;font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--resume-accent);border-bottom:1.5px solid var(--resume-accent)}
+.resume-section p{margin:0;white-space:pre-line;line-height:1.8}
+.resume-entry{margin-bottom:14px}
+.resume-entry strong{display:block;font-size:10px;font-weight:800;line-height:1.6;margin-bottom:2px}
+.entry-meta{color:#647084;font-size:9px;font-style:italic;margin-bottom:5px;line-height:1.7}
+.resume-entry p{color:#394255}
+.skill-list{display:flex;flex-wrap:wrap;gap:5px}
+.skill-chip{background:#f0f2f8;color:#30384c;border-radius:4px;padding:5px 8px;font-size:9px;font-weight:600}
+.resume-list{padding-left:15px;margin:0;line-height:1.8}
+.resume-list li{margin-bottom:5px}
+.footer{text-align:center;color:#667085;font-size:8px;padding:0 20px 18px;letter-spacing:.5px}
+
+/* Unique typography for every color theme */
+.paper.theme-modern{font-family:'DM Sans',sans-serif}
+.paper.theme-modern .resume-name,.paper.theme-modern h3{font-family:'Montserrat',sans-serif}
+.paper.theme-modern .resume-name{font-weight:800;letter-spacing:-1px}
+.paper.theme-modern h3{font-weight:800;letter-spacing:1.1px}
+.paper.theme-sage{font-family:'Lato',sans-serif}
+.paper.theme-sage .resume-name,.paper.theme-sage h3{font-family:'Merriweather',serif}
+.paper.theme-sage .resume-name{font-weight:900;letter-spacing:-.5px}
+.paper.theme-sage h3{font-weight:700;letter-spacing:.3px;text-transform:none}
+.paper.theme-sunset{font-family:'Nunito Sans',sans-serif}
+.paper.theme-sunset .resume-name,.paper.theme-sunset h3{font-family:'Playfair Display',serif}
+.paper.theme-sunset .resume-name{font-weight:800;letter-spacing:-.7px}
+.paper.theme-sunset .resume-title{font-family:'Nunito Sans',sans-serif;font-weight:700;letter-spacing:1px}
+.paper.theme-sunset h3{font-style:italic;text-transform:none;letter-spacing:.2px}
+.paper.theme-midnight{font-family:'Roboto',sans-serif}
+.paper.theme-midnight .resume-name,.paper.theme-midnight h3{font-family:'Montserrat',sans-serif}
+.paper.theme-midnight .resume-name{font-weight:800;text-transform:uppercase;letter-spacing:-.6px}
+.paper.theme-midnight .resume-title,.paper.theme-midnight .resume-entry strong{font-family:'Roboto',sans-serif}
+.paper.theme-midnight h3{font-weight:800;letter-spacing:1.4px}
+.paper.theme-classic{font-family:'Libre Baskerville',serif;font-size:9.5px;line-height:1.8}
+.paper.theme-classic .resume-name,.paper.theme-classic h3{font-family:'Libre Baskerville',serif}
+.paper.theme-classic .resume-name{font-weight:700;letter-spacing:-.8px}
+.paper.theme-classic .resume-title,.paper.theme-classic .resume-entry strong{font-family:'Lato',sans-serif}
+.paper.theme-classic h3{font-size:11px;letter-spacing:0;text-transform:none}
+.paper.theme-lavender{font-family:'Poppins',sans-serif}
+.paper.theme-lavender .resume-name{font-family:'Playfair Display',serif;font-weight:800;letter-spacing:-.5px}
+.paper.theme-lavender h3,.paper.theme-lavender .resume-title,.paper.theme-lavender .resume-entry strong{font-family:'Poppins',sans-serif}
+.paper.theme-lavender h3{font-weight:700;letter-spacing:.5px;text-transform:none}
+.paper.theme-sage .resume-header{background:#355c50}
+.paper.theme-sunset .resume-header{background:#b4533c}
+.paper.theme-midnight .resume-header{background:#202c49}
+.paper.theme-classic .resume-header{background:#333}
+.paper.theme-lavender .resume-header{background:#7863a8}
+.paper.theme-sage h3{color:#355c50;border-color:#355c50}
+.paper.theme-sunset h3{color:#b4533c;border-color:#b4533c}
+.paper.theme-midnight h3{color:#202c49;border-color:#202c49}
+.paper.theme-classic h3{color:#333;border-color:#333}
+.paper.theme-lavender h3{color:#7863a8;border-color:#7863a8}
+.paper.layout-classic .resume-header{background:white!important;color:#202638;border-bottom:3px solid var(--resume-accent)}
+.paper.layout-classic .resume-photo,.paper.layout-minimal .resume-photo{border-color:var(--resume-accent)}
+.paper.layout-classic .resume-contact,.paper.layout-minimal .resume-contact{color:#475569}
+.paper.layout-minimal .resume-header{background:white!important;color:#202638;border-left:7px solid var(--resume-accent)}
+.toast{position:fixed;bottom:20px;right:20px;z-index:30;background:#172238;border:1px solid #35415b;border-radius:10px;color:white;padding:12px 16px;font-size:12px;box-shadow:0 10px 30px #0008;display:none}
+.toast.show{display:block}
+@media(max-width:1000px){.workspace{grid-template-columns:1fr}.preview-panel{position:static}.paper{max-width:700px}}
+@media(max-width:560px){.topbar{padding:12px 4%}.brand-name{font-size:17px}.brand-sub{font-size:8px}.logo{width:39px;height:39px}.top-actions{gap:5px}.top-actions .btn{padding:8px;font-size:10px}.workspace{padding:18px 4% 35px;gap:17px}.editor-body{padding:15px}.panel-header{padding:15px}.field-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.theme-grid{grid-template-columns:repeat(2,1fr)}.preview-area{padding:10px;overflow-x:auto}.paper{min-width:450px}.resume-header{padding:23px}.resume-content{padding:22px}.resume-name{font-size:25px}}
+@media print{
+ @page{size:A4;margin:0}
+ html,body{background:white!important;margin:0;padding:0}
+ body *{visibility:hidden!important}
+ #resumePaper,#resumePaper *{visibility:visible!important}
+ #resumePaper{position:absolute;left:0;top:0;width:210mm;max-width:none;min-height:297mm;margin:0;box-shadow:none;font-size:9.5pt;line-height:1.6;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+ #resumePaper .resume-header{padding:15mm 15mm 11mm}
+ #resumePaper .resume-content{padding:11mm 15mm}
+ #resumePaper .resume-name{font-size:26pt}
+ #resumePaper .resume-title{font-size:10pt}
+ #resumePaper .resume-section h3{font-size:11pt}
+ #resumePaper .resume-entry{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <div class="logo" aria-label="BioNexus logo">
+      <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10 5.5H23L31 13.5V32.5C31 34.2 29.7 35.5 28 35.5H10C8.3 35.5 7 34.2 7 32.5V8.5C7 6.8 8.3 5.5 10 5.5Z" stroke="white" stroke-width="2.7"/>
+        <path d="M22.5 6V13.5H30M13 19H20M13 24H19" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M22 19.2H25.3C29 19.2 29 24 25.3 24H22V19.2ZM22 24H25.7C29.5 24 29.5 29 25.7 29H22V24Z" stroke="white" stroke-width="2"/>
+      </svg>
+    </div>
+    <div><div class="brand-name">Bio<span>Nexus</span></div><div class="brand-sub">RESUME STUDIO</div></div>
+  </div>
+  <div class="top-actions">
+    <button class="btn" id="demoBtn">✦ Try Demo</button>
+    <button class="btn btn-danger" id="resetBtn">Reset</button>
+    <button class="btn btn-primary" id="printBtn">↓ Save as PDF</button>
+  </div>
+</header>
+
+<main class="workspace">
+<section class="panel">
+<div class="panel-header"><div><h2>Resume Editor</h2><p>Build your professional profile</p></div><span class="step">STEP 01 / 02</span></div>
+<div class="editor-body">
+<div class="section-title"><span class="section-icon">✧</span> Choose your design</div>
+<div class="theme-grid">
+<button type="button" class="theme-option active" data-theme="modern"><div class="theme-art"><span style="width:32%;background:#6558d3"></span><span style="flex:1;background:linear-gradient(#e8eaf0 15%,white 15%)"></span></div><strong>Modern</strong><small>Montserrat + DM Sans</small></button>
+<button type="button" class="theme-option" data-theme="sage"><div class="theme-art"><span style="width:32%;background:#355c50"></span><span style="flex:1;background:#fff"></span></div><strong>Sage</strong><small>Merriweather + Lato</small></button>
+<button type="button" class="theme-option" data-theme="sunset"><div class="theme-art"><span style="width:32%;background:#b4533c"></span><span style="flex:1;background:#fff"></span></div><strong>Sunset</strong><small>Playfair + Nunito</small></button>
+<button type="button" class="theme-option" data-theme="midnight"><div class="theme-art"><span style="width:32%;background:#202c49"></span><span style="flex:1;background:#fff"></span></div><strong>Midnight</strong><small>Montserrat + Roboto</small></button>
+<button type="button" class="theme-option" data-theme="classic"><div class="theme-art"><span style="width:100%;background:linear-gradient(#333 0 20%,white 20% 100%)"></span></div><strong>Classic</strong><small>Libre Baskerville + Lato</small></button>
+<button type="button" class="theme-option" data-theme="lavender"><div class="theme-art"><span style="width:32%;background:#7863a8"></span><span style="flex:1;background:#fff"></span></div><strong>Lavender</strong><small>Playfair + Poppins</small></button>
+</div>
+
+<div class="section-title"><span class="section-icon">◈</span> Personal information</div>
+<div class="field-grid">
+<div class="field full"><label for="name">FULL NAME *</label><input id="name" placeholder="e.g. Alex Morgan"></div>
+<div class="field full"><label for="jobTitle">PROFESSIONAL TITLE</label><input id="jobTitle" placeholder="e.g. Aspiring Web Developer"></div>
+<div class="field"><label for="email">EMAIL ADDRESS</label><input id="email" type="email" placeholder="alex@email.com"></div>
+<div class="field"><label for="phone">PHONE NUMBER</label><input id="phone" type="tel" placeholder="+63 912 345 6789"></div>
+<div class="field full"><label for="location">LOCATION</label><input id="location" placeholder="City, Province, Philippines"></div>
+<div class="field full"><label for="website">LINKEDIN / WEBSITE</label><input id="website" placeholder="linkedin.com/in/yourname"></div>
+<div class="field full"><label>PROFILE PHOTO (OPTIONAL)</label><div class="photo-upload"><div class="avatar-placeholder" id="photoIcon">♙</div><div class="photo-copy"><strong>Upload a profile photo</strong><span>JPG or PNG · Maximum 3 MB</span></div><input type="file" id="photo" accept="image/png,image/jpeg,image/webp"></div></div>
+</div>
+
+<hr class="divider">
+<div class="section-title"><span class="section-icon">✎</span> Professional summary</div>
+<div class="field"><label for="summary">ABOUT YOU</label><textarea id="summary" placeholder="Write 2–4 sentences about your strengths, goals, and what you can contribute..."></textarea><div class="help">Highlight your strongest skills and the value you can bring.</div></div>
+<div class="section-title"><span class="section-icon">✦</span> Skills & expertise</div>
+<div class="field"><label for="skills">YOUR SKILLS</label><textarea id="skills" placeholder="HTML, CSS, JavaScript, Communication, Teamwork"></textarea><div class="help">Separate skills with commas or put each skill on a new line.</div></div>
+<div class="section-title"><span class="section-icon">▤</span> Education</div>
+<div class="field-grid">
+<div class="field full"><label for="school">SCHOOL / INSTITUTION</label><input id="school" placeholder="School or university name"></div>
+<div class="field"><label for="degree">DEGREE / PROGRAM</label><input id="degree" placeholder="e.g. ICT Strand"></div>
+<div class="field"><label for="eduDate">YEAR / PERIOD</label><input id="eduDate" placeholder="2024 – Present"></div>
+<div class="field full"><label for="eduDetails">ACHIEVEMENTS / DETAILS</label><textarea id="eduDetails" placeholder="Academic awards, relevant coursework, honors..."></textarea></div>
+</div>
+<div class="section-title"><span class="section-icon">⌘</span> Experience & projects</div>
+<div class="field-grid">
+<div class="field full"><label for="expTitle">ROLE / PROJECT TITLE</label><input id="expTitle" placeholder="e.g. Student Web Developer"></div>
+<div class="field"><label for="company">COMPANY / ORGANIZATION</label><input id="company" placeholder="Organization or project"></div>
+<div class="field"><label for="expDate">YEAR / PERIOD</label><input id="expDate" placeholder="2025 – Present"></div>
+<div class="field full"><label for="expDetails">RESPONSIBILITIES / ACHIEVEMENTS</label><textarea id="expDetails" placeholder="Describe what you did, built, improved, or achieved..."></textarea></div>
+</div>
+<div class="section-title"><span class="section-icon">✧</span> Certificates & awards</div>
+<div class="field"><label for="certificates">CERTIFICATIONS / ACHIEVEMENTS</label><textarea id="certificates" placeholder="Computer System Servicing NC II, academic awards..."></textarea></div>
+<div class="section-title"><span class="section-icon">◎</span> Languages</div>
+<div class="field"><label for="languages">LANGUAGES YOU SPEAK</label><input id="languages" placeholder="Filipino, English"></div>
+<hr class="divider">
+<div class="section-title"><span class="section-icon">⚙</span> Customize your style</div>
+<div class="field-grid">
+<div class="field"><label for="accentColor">ACCENT COLOR</label><div class="color-row"><input type="color" id="accentColor" value="#6558d3"><span>Choose your signature color</span></div></div>
+<div class="field"><label for="layout">HEADER STYLE</label><select id="layout"><option value="standard">Standard</option><option value="classic">Classic</option><option value="minimal">Minimal</option></select></div>
+</div>
+<div class="score-card"><div class="score-top"><strong>✦ Resume Strength Score</strong><span class="score-number" id="scoreNumber">0/100</span></div><div class="score-track"><div class="score-fill" id="scoreFill"></div></div><div class="score-message" id="scoreMessage">Complete your information to build a stronger resume.</div><div class="coach-list" id="coachList"></div></div>
+<p class="help">Your information is saved locally in this browser. Avoid using a shared computer for personal data.</p>
+</div>
+</section>
+
+<section class="panel preview-panel">
+<div class="panel-header"><div><h2>Live Preview</h2><p><span class="live-dot">●</span> Updates as you type</p></div><button class="btn btn-cyan" id="previewPrint">↓ Export PDF</button></div>
+<div class="preview-area"><div class="preview-caption"><span>RESUME PREVIEW</span><span>A4 DOCUMENT</span></div>
+<article class="paper theme-modern layout-standard" id="resumePaper">
+<header class="resume-header"><img class="resume-photo" id="resumePhoto" alt="Profile photo"><div><h1 class="resume-name" id="outName">Your Name</h1><div class="resume-title" id="outTitle">Your Professional Title</div><div class="resume-contact" id="outContact"></div></div></header>
+<div class="resume-content"><div class="resume-columns"><div>
+<section class="resume-section" id="summarySection"><h3>Professional Summary</h3><p id="outSummary">Your professional summary will appear here.</p></section>
+<section class="resume-section" id="experienceSection"><h3>Experience & Projects</h3><div id="outExperience"></div></section>
+<section class="resume-section" id="educationSection"><h3>Education</h3><div id="outEducation"></div></section>
+</div><aside>
+<section class="resume-section" id="skillsSection"><h3>Skills</h3><div class="skill-list" id="outSkills"></div></section>
+<section class="resume-section" id="certSection"><h3>Certificates & Awards</h3><ul class="resume-list" id="outCertificates"></ul></section>
+<section class="resume-section" id="languageSection"><h3>Languages</h3><ul class="resume-list" id="outLanguages"></ul></section>
+</aside></div></div><div class="footer">CREATED WITH BIONEXUS RESUME STUDIO</div>
+</article></div>
+</section>
+</main>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const $=id=>document.getElementById(id);
+const fields=["name","jobTitle","email","phone","location","website","summary","skills","school","degree","eduDate","eduDetails","expTitle","company","expDate","expDetails","certificates","languages","accentColor","layout"];
+let selectedTheme="modern",photoData="",toastTimer;
+function safeText(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function lines(v){return String(v||"").split(/\n|,/).map(x=>x.trim()).filter(Boolean);}
+function showToast(msg){$("toast").textContent=msg;$("toast").classList.add("show");clearTimeout(toastTimer);toastTimer=setTimeout(()=>$("toast").classList.remove("show"),2600);}
+function addEntry(box,title,meta,details){if(!title&&!meta&&!details)return false;const e=document.createElement("div");e.className="resume-entry";e.innerHTML=(title?`<strong>${safeText(title)}</strong>`:"")+(meta?`<div class="entry-meta">${safeText(meta)}</div>`:"")+(details?`<p>${safeText(details)}</p>`:"");box.appendChild(e);return true;}
+function addList(box,items){box.innerHTML="";items.forEach(value=>{const li=document.createElement("li");li.textContent=value;box.appendChild(li);});}
+function toggleSection(id,show){$(id).style.display=show?"":"none";}
+function render(){
+ const v=id=>$(id).value.trim();
+ $("outName").textContent=v("name")||"Your Name";
+ $("outTitle").textContent=v("jobTitle")||"Your Professional Title";
+ $("outContact").innerHTML=[v("email"),v("phone"),v("location"),v("website")].filter(Boolean).map(x=>`<span>${safeText(x)}</span>`).join("");
+ $("outSummary").textContent=v("summary")||"Your professional summary will appear here. Introduce your background, strengths, and career goals.";
+ $("outSummary").style.color=v("summary")?"#394255":"#8a93a4";
+ $("outSkills").innerHTML="";const skills=lines(v("skills"));
+ skills.forEach(s=>{const chip=document.createElement("span");chip.className="skill-chip";chip.textContent=s;$("outSkills").appendChild(chip);});
+ if(!skills.length)$("outSkills").innerHTML='<span style="color:#8a93a4">Add your skills</span>';
+ $("outEducation").innerHTML="";
+ const education=addEntry($("outEducation"),v("degree")||v("school"),[v("school"),v("eduDate")].filter(Boolean).join(" · "),v("eduDetails"));
+ toggleSection("educationSection",education);
+ $("outExperience").innerHTML="";
+ const experience=addEntry($("outExperience"),v("expTitle"),[v("company"),v("expDate")].filter(Boolean).join(" · "),v("expDetails"));
+ toggleSection("experienceSection",experience);
+ const certs=lines(v("certificates"));addList($("outCertificates"),certs);toggleSection("certSection",certs.length>0);
+ const langs=lines(v("languages"));addList($("outLanguages"),langs);toggleSection("languageSection",langs.length>0);
+ toggleSection("skillsSection",true);toggleSection("summarySection",true);
+ const paper=$("resumePaper");paper.className=`paper theme-${selectedTheme} layout-${v("layout")||"standard"}`;
+ paper.style.setProperty("--resume-accent",v("accentColor")||"#6558d3");
+ const img=$("resumePhoto");
+ if(photoData){img.src=photoData;img.classList.add("visible");$("photoIcon").innerHTML=`<img src="${photoData}" alt="Selected profile photo">`;}
+ else{img.removeAttribute("src");img.classList.remove("visible");$("photoIcon").textContent="♙";}
+ updateScore();
+}
+function updateScore(){
+ const checks=[["name","Add your full name",8],["jobTitle","Add a professional title",8],["email","Include an email address",8],["phone","Include a phone number",6],["location","Add your location",6],["summary","Write a professional summary",12],["skills","List your skills",12],["school","Add your education",12],["expTitle","Describe a project or experience",12],["certificates","Include a certificate or achievement",8],["languages","Add languages you speak",8]];
+ let score=0,missing=[];checks.forEach(([id,tip,pts])=>{$(id).value.trim()?score+=pts:missing.push(tip);});
+ $("scoreNumber").textContent=score+"/100";$("scoreFill").style.width=score+"%";
+ $("scoreMessage").textContent=score>=85?"Great progress! Review your details before exporting.":score>=55?"Your resume is taking shape. Complete more sections.":"Complete your information to build a stronger resume.";
+ $("coachList").innerHTML="";
+ (missing.length?missing.slice(0,3):["Review spelling and contact details","Use specific achievements where possible","Save a PDF copy before sending"]).forEach(tip=>{const item=document.createElement("div");item.className="coach-item";const check=document.createElement("span");check.className="check";check.textContent="✓";const text=document.createElement("span");text.textContent=tip;item.append(check,text);$("coachList").appendChild(item);});
+}
+function saveLocal(){try{const data={};fields.forEach(id=>data[id]=$(id).value);data.theme=selectedTheme;data.photoData=photoData;localStorage.setItem("bionexus-resume-v1",JSON.stringify(data));}catch(e){}}
+function updateAll(){render();saveLocal();}
+function selectTheme(){document.querySelectorAll(".theme-option").forEach(b=>b.classList.toggle("active",b.dataset.theme===selectedTheme));}
+function loadSaved(){try{const raw=localStorage.getItem("bionexus-resume-v1");if(!raw)return;const d=JSON.parse(raw);fields.forEach(id=>{if(typeof d[id]==="string")$(id).value=d[id];});if(["modern","sage","sunset","midnight","classic","lavender"].includes(d.theme))selectedTheme=d.theme;photoData=typeof d.photoData==="string"?d.photoData:"";selectTheme();}catch(e){}}
+document.querySelectorAll(".theme-option").forEach(b=>b.addEventListener("click",()=>{selectedTheme=b.dataset.theme;selectTheme();updateAll();}));
+fields.forEach(id=>{ $(id).addEventListener("input",updateAll);$(id).addEventListener("change",updateAll); });
+$("photo").addEventListener("change",e=>{
+ const f=e.target.files&&e.target.files[0];if(!f)return;
+ if(!["image/jpeg","image/png","image/webp"].includes(f.type)){showToast("Choose a JPG, PNG, or WebP image.");e.target.value="";return;}
+ if(f.size>3*1024*1024){showToast("Photo must be smaller than 3 MB.");e.target.value="";return;}
+ const r=new FileReader();r.onload=()=>{photoData=String(r.result);updateAll();showToast("Profile photo added.");};r.onerror=()=>showToast("Unable to read this image.");r.readAsDataURL(f);
+});
+function exportPDF(){render();window.print();}
+$("printBtn").addEventListener("click",exportPDF);$("previewPrint").addEventListener("click",exportPDF);
+$("demoBtn").addEventListener("click",()=>{
+ const d={name:"Alex Morgan",jobTitle:"Aspiring Web Developer",email:"alex.morgan@email.com",phone:"+63 912 345 6789",location:"Quezon City, Philippines",website:"linkedin.com/in/alexmorgan",summary:"Motivated ICT student interested in web development and user-focused design. Eager to apply technical knowledge, problem-solving skills, and creativity to meaningful projects while continuously learning new technologies.",skills:"HTML, CSS, JavaScript, Responsive Design, Problem Solving, Teamwork, Communication",school:"Example Senior High School",degree:"Information and Communications Technology",eduDate:"2024 – Present",eduDetails:"Relevant coursework: Web Development, Computer Systems Servicing, Database Management.",expTitle:"Student Web Developer",company:"Academic Projects",expDate:"2025 – Present",expDetails:"Designed responsive web pages using HTML and CSS. Collaborated on a website project and improved structure, accessibility, and user experience.",certificates:"Web Development Project – School Showcase\nAcademic Achievement Award",languages:"Filipino, English",accentColor:"#6558d3",layout:"standard"};
+ fields.forEach(id=>{if(d[id]!==undefined)$(id).value=d[id];});photoData="";$("photo").value="";selectedTheme="modern";selectTheme();updateAll();showToast("Demo loaded. Replace it with your own details!");
+});
+$("resetBtn").addEventListener("click",()=>{
+ if(!confirm("Clear all resume information and start over?"))return;
+ fields.forEach(id=>$(id).value=id==="accentColor"?"#6558d3":id==="layout"?"standard":"");
+ photoData="";$("photo").value="";selectedTheme="modern";selectTheme();
+ try{localStorage.removeItem("bionexus-resume-v1");}catch(e){}
+ render();showToast("Resume cleared.");
+});
+loadSaved();selectTheme();render();
+</script>
+</body>
+</html>
